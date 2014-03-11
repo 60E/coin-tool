@@ -3,7 +3,8 @@ try:
 except ImportError:
     import httplib
 import base64
-import simplejson
+import json
+import decimal
 
 try:
     import urllib.parse as urlparse
@@ -78,9 +79,9 @@ class RPCMethod(object):
                 'method': self._method_name,
                 'params': args,
                 'id': self._service_proxy._id_counter}
-        post_data = simplejson.dumps(data, use_decimal=True)
+        post_data = json.dumps(data)
         resp = self._service_proxy._transport.request(post_data)
-        resp = simplejson.loads(resp, use_decimal=True)
+        resp = json.loads(resp, parse_float=decimal.Decimal)
 
         if resp['error'] is not None:
             self._service_proxy._raise_exception(resp['error'])
