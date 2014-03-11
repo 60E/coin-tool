@@ -4,7 +4,7 @@ from decimal import Decimal
 bitcoind = BitcoinRPC('naituida','123','localhost',8088)
 #print bitcoind.getinfo()
 
-def send_from_local(from_addresses, payments, change_address, min_conf=6, wallet_pwd=None):
+def send_from_local(from_addresses, payments, change_address, min_conf=0, wallet_pwd=None):
     _payments = {}
     for address, amount in payments.iteritems():
         _payments[address] = Decimal(amount)

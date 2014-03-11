@@ -3,7 +3,7 @@ try:
 except ImportError:
     import httplib
 import base64
-import json
+import simplejson
 import decimal
 
 try:
@@ -15,7 +15,6 @@ from collections import defaultdict, deque
 USER_AGENT = "AuthServiceProxy/0.1"
 
 HTTP_TIMEOUT = 30
-
 
 class JSONRPCException(Exception):
     def __init__(self, rpc_error):
@@ -79,9 +78,9 @@ class RPCMethod(object):
                 'method': self._method_name,
                 'params': args,
                 'id': self._service_proxy._id_counter}
-        post_data = json.dumps(data)
+        post_data = simplejson.dumps(data, use_decimal = True)
         resp = self._service_proxy._transport.request(post_data)
-        resp = json.loads(resp, parse_float=decimal.Decimal)
+        resp = simplejson.loads(resp, use_decimal = True)
 
         if resp['error'] is not None:
             self._service_proxy._raise_exception(resp['error'])
