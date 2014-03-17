@@ -94,3 +94,20 @@ class BitcoinRPC(object):
         """
         return self.proxy.sendrawtransaction(hexstring)
 
+    def decoderawtransaction(self, hexstring):
+        """
+        send signed rawtransaction to the Bitcoin network
+        returns transaction hash, or an error if the transaction is invalid for any reason
+        """
+        return self.proxy.decoderawtransaction(hexstring)
+
+
+    def getrawtransaction(self, hexstring):
+        return self.proxy.getrawtransaction(hexstring)
+
+    def getblockhash(self,height):
+        return self.proxy.getblockhash(height)
+
+
+    def getblock(self,hash):
+        return self.proxy.getblock(hash)
